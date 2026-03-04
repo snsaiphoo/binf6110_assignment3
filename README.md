@@ -1,1 +1,3 @@
-# binf6110_assignment3
+# Comparative Shotgun Metagenomic Analysis of Gut Microbiomes in Vegans and Omnivores
+
+## Introduction 
