@@ -19,3 +19,14 @@ mv fastqc_v0.11.9_cv8.sif fastqc.sif
 
 # MultiQC version 1.33 with PDF support
 apptainer pull multiqc.sif docker://multiqc/multiqc:pdf-v1.33
+
+# FASTP version 0.23.4
+apptainer pull fastp.sif docker://quay.io/biocontainers/fastp:0.23.4--h5f740d0_0
+
+# Apptainer Kraken2 version 2.17.1
+apptainer pull kraken2_2.17.1.sif docker://staphb/kraken2:2.17.1
+mv kraken2_2.17.1.sif kraken2.sif
+
+# Bracken version 3.1
+apptainer pull bracken_3.1.sif docker://staphb/bracken:3.1
+mv bracken_3.1.sif bracken.sif
