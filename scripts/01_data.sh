@@ -1,37 +1,34 @@
 #!/bin/bash
 
-# move to the raw data folder
-
-cd ..
-mkdir -p raw_data
-cd raw_data
-
-
 module load apptainer
 
-mkdir -p vegan
-cd vegan
+CONTAINER=/home/ssaiphoo/work/metagenomics/containers/sra-toolkit.sif
+SCRATCH_DIR=$SCRATCH/metagenomics/raw_data
+
+mkdir -p $SCRATCH_DIR/vegan
+mkdir -p $SCRATCH_DIR/omnivore
 
 # vegan samples
+cd $SCRATCH_DIR/vegan
+
 # subject ID VOV54
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146944
+apptainer exec $CONTAINER prefetch SRR8146944
 
 # subject ID 02BA
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146951
+apptainer exec $CONTAINER prefetch SRR8146951
 
 # subject ID 18PR
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146954
+apptainer exec $CONTAINER prefetch SRR8146954
 
-cd ..
-mkdir -p omnivore
-cd omnivore
+# omnivore samples
+cd $SCRATCH_DIR/omnivore
 
 # subject ID VOV08
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146935
+apptainer exec $CONTAINER prefetch SRR8146935
 
 # subject ID VOV104
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146936
+apptainer exec $CONTAINER prefetch SRR8146936
 
 # subject ID VOV03
-apptainer exec ../../containers/sra-toolkit.sif prefetch SRR8146938
+apptainer exec $CONTAINER prefetch SRR8146938
 

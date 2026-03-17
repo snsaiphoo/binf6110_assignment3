@@ -2,14 +2,29 @@
 
 module load apptainer
 
-# vegan samples
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551665
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551664
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551663
+SCRATCH_DIR=$SCRATCH/metagenomics/raw_data
 
-# omnivore samples
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551662
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551661
-apptainer exec ../containers/sra-toolkit.sif fasterq-dump SRR10551660
+# vegan samples validation
 
-gzip *.fastq
+cd $SCRATCH_DIR/vegan
+
+for srr in SRR8146944 SRR8146951 SRR8146954
+do
+    vdb-validate $srr
+done
+
+# omnivore sample validation
+
+cd $SCRATCH_DIR/omnivore
+
+for srr in SRR8146935 SRR8146936 SRR8146938
+do
+    vdb-validate $srr
+done
+
+# If validation fails, run:
+    # rm -rf $srr
+    # rm -rf ~/ncbi/public/sra/${srr}*
+    # prefetch $srr --max-size 100G
+
+

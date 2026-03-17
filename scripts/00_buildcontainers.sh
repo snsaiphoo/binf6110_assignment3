@@ -11,3 +11,5 @@ singularity pull docker://quay.io/biocontainers/sra-tools:3.2.1--h4304569_1
 mv sra-tools_3.2.1--h4304569_1.sif sra-toolkit.sif
 
 
+# PIGZ (Parallel compressing)
+apptainer pull pigz.sif docker://genevera/docker-pigz
