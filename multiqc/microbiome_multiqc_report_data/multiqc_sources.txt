@@ -1,0 +1,13 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	SRR8146935_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146935_1_fastqc.zip
+FastQC	all_sections	SRR8146935_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146935_2_fastqc.zip
+FastQC	all_sections	SRR8146936_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146936_1_fastqc.zip
+FastQC	all_sections	SRR8146936_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146936_2_fastqc.zip
+FastQC	all_sections	SRR8146938_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146938_1_fastqc.zip
+FastQC	all_sections	SRR8146938_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/omnivore/SRR8146938_2_fastqc.zip
+FastQC	all_sections	SRR8146944_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146944_1_fastqc.zip
+FastQC	all_sections	SRR8146944_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146944_2_fastqc.zip
+FastQC	all_sections	SRR8146951_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146951_1_fastqc.zip
+FastQC	all_sections	SRR8146951_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146951_2_fastqc.zip
+FastQC	all_sections	SRR8146954_1	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146954_1_fastqc.zip
+FastQC	all_sections	SRR8146954_2	/home/ssaiphoo/work/metagenomics/fastqc_reports/vegan/SRR8146954_2_fastqc.zip
