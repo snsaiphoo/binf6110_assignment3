@@ -27,4 +27,6 @@ The last step is the differential abundance analysis, which will identify taxa t
 [7] J. Lu, F. P. Breitwieser, P. Thielen, and S. L. Salzberg, “Bracken: estimating species abundance in metagenomics data,” PeerJ Computer Science, vol. 3, p. e104, Jan. 2017, doi: https://doi.org/10.7717/peerj-cs.104. <br/>
 [8] T. Wen, G. Niu, T. Chen, Q. Shen, J. Yuan, and Y. Liu, “The best practice for microbiome analysis using R,” Protein & Cell, vol. 14, no. 10, pp. 713–725, May 2023, doi: https://doi.org/10.1093/procel/pwad024. <br/>
 [9] J. G. Kers and E. Saccenti, “The Power of Microbiome Studies: Some Considerations on Which Alpha and Beta Metrics to Use and How to Report Results,” Frontiers in Microbiology, vol. 12, p. 796025, Mar. 2022, doi: https://doi.org/10.3389/fmicb.2021.796025.  <br/>
+[10] H. Zhou, K. He, J. Chen, and X. Zhang, “LinDA: linear models for differential abundance analysis of microbiome compositional data,” Genome Biology, vol. 23, no. 1, Apr. 2022, doi: https://doi.org/10.1186/s13059-022-02655-5. <br/>
+[11] J. Wirbel, M. Essex, S. K. Forslund, and G. Zeller, “A realistic benchmark for differential abundance testing and confounder adjustment in human microbiome studies,” Genome Biology, vol. 25, no. 1, Sep. 2024, doi: https://doi.org/10.1186/s13059-024-03390-9. <br/>
 
