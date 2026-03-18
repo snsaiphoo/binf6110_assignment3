@@ -1,13 +1,11 @@
 /containers
 /raw_data
 *.sif
-*fastq.gz
+*.fastq.gz
 
-README.md
-.Rproj.user
-.Rproj.user/3C87DE70/pcs/files-pane.pper
-.Rproj.user/3C87DE70/pcs/source-pane.pper
-.Rproj.user/3C87DE70/pcs/windowlayoutstate.pper
-.Rproj.user/3C87DE70/pcs/workbench-pane.pper
+.Rproj.user/
 .RData
 .Rhistory
+
+*.biom
+*.pdf
