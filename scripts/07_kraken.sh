@@ -1,12 +1,14 @@
 #!/bin/bash
 
+module load apptainer
+
 BASE=/scratch/ssaiphoo/metagenomics
 CONTAINERS=/home/ssaiphoo/work/metagenomics/containers
 
-KRAKEN_DB=$BASE/kraken2
-OUT=$BASE/results/kraken2_outputs
+KRAKEN_DB=$BASE/kraken2_16db
+OUT=$BASE/results/kraken2_16gb_outputs
 
-THREADS=8
+THREADS=2
 
 mkdir -p $OUT
 
@@ -21,13 +23,14 @@ do
     apptainer exec $CONTAINERS/kraken2.sif kraken2 \
       --db $KRAKEN_DB \
       --threads $THREADS \
-      --confidence 0.15 \
+      --confidence 0.05 \
       --paired \
       --gzip-compressed \
-      --report $OUT/${base}_${GROUP}_kraken2.report \
-      --output $OUT/${base}_${GROUP}_kraken2.output \
+      --report $OUT/${base}_${GROUP}_16gb_kraken2.report \
+      --output $OUT/${base}_${GROUP}_16gb_kraken2.output \
       $BASE/raw_data/$GROUP/${base}_1.trimmed.fastq.gz \
       $BASE/raw_data/$GROUP/${base}_2.trimmed.fastq.gz
+      sleep 20
   done
 done
 
