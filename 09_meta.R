@@ -18,7 +18,7 @@ otu <- otu[, colSums(otu) > 10]
 rarecurve(
   otu,
   step = 10000,
-  sample = min(rowSums(otu)),
+  #sample = min(rowSums(otu)),
   label = TRUE
 )
 
