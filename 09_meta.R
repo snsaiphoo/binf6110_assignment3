@@ -17,7 +17,7 @@ otu <- otu[, colSums(otu) > 10]
 # Rarefaction (faster + stable)
 rarecurve(
   otu,
-  step = 5000,
+  step = 10000,
   sample = min(rowSums(otu)),
   label = TRUE
 )
