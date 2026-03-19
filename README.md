@@ -32,7 +32,21 @@ The data used in this analysis were obtained from the NCBI Sequence Read Archive
 * **Vegan Samples** - SRR8146944, SRR8146951, and SRR8146954 
 * **Omnivore Samples** - SRR8146935, SRR8146936, and SRR8146938 
   
-Raw SRA files were obtained using the prefetch command from the `SRA Toolkit` (v3.2.1) container, as outlined in [`01_data.sh`](scripts/01_data.sh). Conversion to `FASTQ` format was performed using fasterq-dump [`02_data.sh`](scripts/02_data.sh). The resulting FASTQ files were then compressed to facilitate downstream quality control and trimming using `fastq`.
+Raw SRA files were obtained using the `prefetch` command from the `SRA Toolkit` (v3.2.1) container, as outlined in [`01_data.sh`](scripts/01_data.sh). The downloaded samples were then validated to ensure complete retrieval in [`02_data.sh`](scripts/02_data.sh). Conversion to `FASTQ` format was subsequently performed using `fasterq-dump` in [`03_data.sh`](scripts/03_data.sh). The resulting FASTQ files were then compressed using `pigz`, enabling parallel compression to reduce computational time. 
+
+### 2.0 - Quality Control & Trimming 
+#### 2.1 - Quality Control with FastQC
+
+#### 2.2 - Quality Control with MultiQC
+
+#### 2.3 - Trimming with fastp
+
+### 3.0 - Taxonomic Classification with Kraken2 
+#### 3.1 - Standard 16GB Database, 0.05 * 0.10
+#### 3.2 - Standard Full Database, 0.15
+
+### 4.0 - Bracken for Normalization 
+#### 4.1 - Bracken BIOM table 
 
 
 ## References
