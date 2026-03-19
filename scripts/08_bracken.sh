@@ -1,28 +1,33 @@
 #!/bin/bash
 
+module load apptainer
+
 BASE=/scratch/ssaiphoo/metagenomics
 CONTAINERS=/home/ssaiphoo/work/metagenomics/containers
 
-KRAKEN_DB=$BASE/kraken2_16db
-KRAKEN_OUT=$BASE/results/kraken2_16gb_0.10_outputs
-OUT=$BASE/results/bracken_0.10_outputs
+# FULL database
+KRAKEN_DB=$BASE/kraken2_full
+
+# Input: full DB, 0.15 confidence
+KRAKEN_OUT=$BASE/results/kraken2_full_0.15_outputs
+
+# Output: new folder
+OUT=$BASE/results/bracken_0.15_full_outputs
 
 READ_LEN=150
 
 mkdir -p "$OUT"
 
-# bracken
-
-for report in "$KRAKEN_OUT"/*_0.10_kraken2.report
+# Run Bracken
+for report in "$KRAKEN_OUT"/*.report
 do
-  base=$(basename "$report" _0.10_kraken2.report)
+  base=$(basename "$report" .report)
 
   apptainer exec "$CONTAINERS/bracken.sif" bracken \
     -d "$KRAKEN_DB" \
     -i "$report" \
-    -o "$OUT/${base}_0.10.bracken" \
+    -o "$OUT/${base}_0.15_full.bracken" \
     -r "$READ_LEN" \
     -l S \
     -t 10
 done
-
