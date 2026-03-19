@@ -16,6 +16,24 @@ Following taxonomic classification and abundance estimation, microbial community
 
 The last step is the differential abundance analysis, which will identify taxa that differ significantly between the vegan and omnivore samples. Differential abundance testing is a central component of microbiome analysis. However, in microbiome datasets, only relative abundances of taxa are observed, which makes it challenging to identify truly differential taxa [10]. Due to this, `ANCOM-BC` (Analysis of Compositions of Microbiomes with Bias Correction) will be used for differential abundance, which was specifically developed to account for compositional bias in microbiome sequencing data. Methods originally developed for RNA-seq analysis, such as `DESeq2` and `edgeR`, have been shown to perform poorly on microbiome taxonomic profiles, except for limma, due to differences in the statistical properties of the data [10]. In contrast, methods such as `ANCOM` and `ANCOM-BC` better control false discovery rates when identifying differential taxa in microbiome datasets [11]. Therefore, `ANCOM-BC` was selected to identify taxa whose abundance differs significantly between the vegan and omnivore groups in this study.
 
+## Methods
+The metagenomics analysis was conducted using the _Digital Research Alliance of Canada Nibi Cluster_ and `RStudio`. All software and modules on the cluster were run through `Docker` container images executed with `Apptainer`, ensuring a consistent and reproducible environment. The workflow is outlined below, with all associated scripts available in the [`scripts`](scripts/) directory. All .sh scripts were executed on the Nibi scratch environment, while downstream analysis in `RStudio` was performed outside of the cluster.
+
+### 1.0 - Data Acquisition & Software Setup 
+### 1.1 - Nibi Cluster Containers
+To ensure reproducibility and maintain consistent software versions, all command-line tools were executed within containerized environments. `Apptainer` was used to retrieve pre-built `Docker` images and convert them into `.sif` container files, which were organized within a dedicated `containers/` directory. The process of building these containers was automated using the [`00_buildcontainers.sh`](scripts/00_buildcontainers.sh) script, which includes version numbers.
+
+#### 1.2 - R Environment Setup 
+Data analysis was performed in `R` version 4.5.1. All necessary `CRAN` and `Bioconductor` dependencies, including their respective versions, can be installed using the [`00_packages.R`](scripts/00_packages.R) script included in this repository.
+
+#### 1.3 - Data Acquisition 
+The data used in this analysis were obtained from the NCBI Sequence Read Archive (SRA) and consisted of three vegan and three omnivore samples from the study by De Filippis et al. [1]. 
+
+* **Vegan Samples** - SRR8146944, SRR8146951, and SRR8146954 
+* **Omnivore Samples** - SRR8146935, SRR8146936, and SRR8146938 
+  
+Raw SRA files were obtained using the prefetch command from the `SRA Toolkit` (v3.2.1) container, as outlined in [`01_data.sh`](scripts/01_data.sh). Conversion to `FASTQ` format was performed using fasterq-dump [`02_data.sh`](scripts/02_data.sh). The resulting FASTQ files were then compressed to facilitate downstream quality control and trimming using `fastq`.
+
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
