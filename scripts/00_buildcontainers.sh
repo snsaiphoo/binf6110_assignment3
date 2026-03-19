@@ -30,3 +30,6 @@ mv kraken2_2.17.1.sif kraken2.sif
 # Bracken version 3.1
 apptainer pull bracken_3.1.sif docker://staphb/bracken:3.1
 mv bracken_3.1.sif bracken.sif
+
+# Kraken-Biom version 1.0.1
+apptainer pull kraken-biom.sif docker://shaunchuah/kraken_biom:v1.0.1
