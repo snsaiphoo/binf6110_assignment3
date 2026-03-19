@@ -20,7 +20,7 @@ The last step is the differential abundance analysis, which will identify taxa t
 The metagenomics analysis was conducted using the _Digital Research Alliance of Canada Nibi Cluster_ and `RStudio`. All software and modules on the cluster were run through `Docker` container images executed with `Apptainer`, ensuring a consistent and reproducible environment. The workflow is outlined below, with all associated scripts available in the [`scripts`](scripts/) directory. All .sh scripts were executed on the Nibi scratch environment, while downstream analysis in `RStudio` was performed outside of the cluster.
 
 ### 1.0 - Data Acquisition & Software Setup 
-### 1.1 - Nibi Cluster Containers
+#### 1.1 - Nibi Cluster Containers
 To ensure reproducibility and maintain consistent software versions, all command-line tools were executed within containerized environments. `Apptainer` was used to retrieve pre-built `Docker` images and convert them into `.sif` container files, which were organized within a dedicated `containers/` directory. The process of building these containers was automated using the [`00_buildcontainers.sh`](scripts/00_buildcontainers.sh) script, which includes version numbers.
 
 #### 1.2 - R Environment Setup 
