@@ -6,7 +6,7 @@ library(ANCOMBC)
 library(microbiome)
 
 # Load BIOM
-biom <- read_biom("../bracken_0.05.biom")
+biom <- read_biom("../table_full_0.15.biom")
 
 # Extract OTU table
 otu <- as.matrix(biom_data(biom))
@@ -16,12 +16,23 @@ otu <- otu[rowSums(otu) > 10, ]
 
 # DO NOT transpose here
 # biom already has taxa as rows and samples as columns
+groups <- ifelse(grepl("vegan", colnames(otu)), "vegan", "omnivore")
+colors <- ifelse(groups == "vegan", "forestgreen", "orange")
 
 # Rarefaction 
 rarecurve(
   t(otu),
-  step = 10000,
-  label = TRUE
+  step = 100000,
+  col = colors,
+  label = FALSE
+)
+
+legend(
+  "bottomright",
+  legend = c("Vegan", "Omnivore"),
+  col = c("forestgreen", "orange"),
+  lty = 1,
+  cex = 0.8
 )
 
 # Create phyloseq OTU table
@@ -137,7 +148,8 @@ head(beta_df)
 
 beta_plot <- ggplot(beta_df, aes(x = Axis.1, y = Axis.2, color = Diet)) +
   geom_point(size = 4) +
-  theme_minimal() +
+  theme_minimal() + 
+  stat_ellipse(level = 0.95) +
   labs(
     title = "PCoA of Bray-Curtis Dissimilarity",
     x = "PCoA 1",
@@ -168,6 +180,7 @@ jaccard_df <- merge(jaccard_df, meta_df, by = "Sample")
 jaccard_plot <- ggplot(jaccard_df, aes(x = Axis.1, y = Axis.2, color = Diet)) +
   geom_point(size = 4) +
   theme_minimal() +
+  stat_ellipse(level = 0.95) +
   labs(
     title = "PCoA of Jaccard Distance",
     x = "PCoA 1",
@@ -190,7 +203,8 @@ nmds_df <- merge(nmds_df, meta_df, by = "Sample")
 
 nmds_plot <- ggplot(nmds_df, aes(x = NMDS1, y = NMDS2, color = Diet)) +
   geom_point(size = 4) +
-  theme_minimal() +
+  theme_minimal() + 
+  stat_ellipse(level = 0.95) +
   labs(
     title = "NMDS (Bray-Curtis)",
     x = "NMDS1",
@@ -200,6 +214,33 @@ nmds_plot <- ggplot(nmds_df, aes(x = NMDS1, y = NMDS2, color = Diet)) +
 nmds_plot
 
 # ggsave("../figures/nmds_bray.png", plot = nmds_plot, width = 7, height = 5, dpi = 300)
+
+# Hellinger transform (improves Bray-Curtis)
+otu_hell <- decostand(t(otu), method = "hellinger")
+
+set.seed(123)
+
+ord_nmds_hell <- metaMDS(
+  otu_hell,
+  distance = "bray",
+  k = 2,
+  trymax = 100
+)
+
+nmds_hell_df <- as.data.frame(ord_nmds_hell$points)
+nmds_hell_df$Diet <- metadata$Diet
+
+# check stress
+ord_nmds_hell$stress
+
+ggplot(nmds_hell_df, aes(x = MDS1, y = MDS2, color = Diet)) +
+  geom_point(size = 3) +
+  stat_ellipse(level = 0.95) +
+  labs(
+    title = "NMDS (Bray-Curtis)",
+    subtitle = paste("Stress =", round(ord_nmds_hell$stress, 3))
+  ) +
+  theme_minimal()
 
 # ANCOM-BC2 - Differential Abundance
 library(phyloseq)
@@ -216,7 +257,10 @@ tax_table(physeq) <- tax_table(as.matrix(tax))
 # 2. Aggregate to Family level 
 physeq_family <- tax_glom(physeq, "Family")
 
-physeq_family <- prune_taxa(taxa_sums(physeq_family) > 10, physeq_family)
+physeq_family <- prune_taxa(
+  taxa_sums(physeq_family) > 10,   # stricter than before
+  physeq_family
+)
 
 # 3. Run ANCOM-BC2
 ancombc.out <- ancombc2(

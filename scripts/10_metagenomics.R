@@ -219,7 +219,10 @@ tax_table(physeq) <- tax_table(as.matrix(tax))
 # 2. Aggregate to Family level 
 physeq_family <- tax_glom(physeq, "Family")
 
-physeq_family <- prune_taxa(taxa_sums(physeq_family) > 100, physeq_family)
+physeq_family <- prune_taxa(
+  taxa_sums(physeq_family) > 100,   # stricter than before
+  physeq_family
+)
 
 # 3. Run ANCOM-BC2
 ancombc.out <- ancombc2(
