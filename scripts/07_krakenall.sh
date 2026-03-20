@@ -1,19 +1,23 @@
 #!/bin/bash
+#SBATCH --job-name=kraken2_full_0.15
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=120G
+#SBATCH --time=10:00:00
+#SBATCH --output=/home/ssaiphoo/scratch/metagenomics/logs/kraken2_full_%j.out
+#SBATCH --error=/home/ssaiphoo/scratch/metagenomics/logs/kraken2_full_%j.err
 
 module load apptainer
 
 CONTAINER=/home/ssaiphoo/work/metagenomics/containers/kraken2.sif
 BASE=/home/ssaiphoo/scratch/metagenomics
 DB=$BASE/kraken2_full
-OUT=$BASE/results/kraken2_full_0.15_outputs
+OUT=$BASE/results/kraken2_full_0.15_2outputs
 
 mkdir -p $OUT
 
 failed_samples=()
 
-############################
-# VEGAN SAMPLES
-############################
+# vegan samples
 
 vegan_samples=(
     SRR8146944
@@ -32,9 +36,7 @@ cd $BASE/raw_data/vegan
 
 for SAMPLE in "${vegan_samples[@]}"
 do
-    echo "=============================="
-    echo "Running Kraken2: $SAMPLE (vegan)"
-    echo "=============================="
+    echo "$SAMPLE - vegan"
 
     if [[ -f "${SAMPLE}_1.trimmed.fastq.gz" && -f "${SAMPLE}_2.trimmed.fastq.gz" ]]; then
 
@@ -49,21 +51,18 @@ do
             --report $OUT/${SAMPLE}_vegan.report \
             --output $OUT/${SAMPLE}_vegan.kraken
         then
-            echo "✅ Completed $SAMPLE"
+            echo "completed $SAMPLE"
         else
-            echo "❌ Kraken2 FAILED for $SAMPLE"
-            failed_samples+=("$SAMPLE (vegan)")
+            echo "failed $SAMPLE"
+            failed_samples+=("$SAMPLE vegan")
         fi
 
     else
-        echo "❌ Missing trimmed files for $SAMPLE"
-        failed_samples+=("$SAMPLE (vegan - missing input)")
+        failed_samples+=("$SAMPLE vegan missing input")
     fi
 done
 
-############################
-# OMNIVORE SAMPLES
-############################
+# omnivore samples
 
 omnivore_samples=(
     SRR8146935
@@ -82,10 +81,8 @@ cd $BASE/raw_data/omnivore
 
 for SAMPLE in "${omnivore_samples[@]}"
 do
-    echo "=============================="
-    echo "Running Kraken2: $SAMPLE (omnivore)"
-    echo "=============================="
-
+    echo "$SAMPLE (omnivore)"
+    
     if [[ -f "${SAMPLE}_1.trimmed.fastq.gz" && -f "${SAMPLE}_2.trimmed.fastq.gz" ]]; then
 
         if apptainer exec $CONTAINER kraken2 \
@@ -99,33 +96,26 @@ do
             --report $OUT/${SAMPLE}_omnivore.report \
             --output $OUT/${SAMPLE}_omnivore.kraken
         then
-            echo "✅ Completed $SAMPLE"
+            echo "completed $SAMPLE"
         else
-            echo "❌ Kraken2 FAILED for $SAMPLE"
-            failed_samples+=("$SAMPLE (omnivore)")
+            echo "failed $SAMPLE"
+            failed_samples+=("$SAMPLE omnivore")
         fi
 
     else
-        echo "❌ Missing trimmed files for $SAMPLE"
-        failed_samples+=("$SAMPLE (omnivore - missing input)")
+        echo "Missing input: $SAMPLE"
+        failed_samples+=("$SAMPLE omnivore - missing input")
     fi
 done
 
-############################
-# SUMMARY
-############################
-
-echo ""
-echo "=============================="
-echo "KRAKEN2 SUMMARY"
-echo "=============================="
+# if samples failed print them out 
 
 if [ ${#failed_samples[@]} -eq 0 ]; then
-    echo "All samples processed successfully ✅"
+    echo "successful"
 else
-    echo "The following samples had issues:"
+    echo "samples with issues:"
     for sample in "${failed_samples[@]}"
     do
-        echo " - $sample"
+        echo "$sample"
     done
 fi

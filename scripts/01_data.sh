@@ -9,26 +9,39 @@ mkdir -p $SCRATCH_DIR/vegan
 mkdir -p $SCRATCH_DIR/omnivore
 
 # vegan samples
+
+vegan_samples=(
+    SRR8146952
+    SRR8146955
+    SRR8146959
+    SRR8146960
+    SRR8146961
+    SRR8146963
+    SRR8146965
+)
+
 cd $SCRATCH_DIR/vegan
 
-# subject ID VOV54
-apptainer exec $CONTAINER prefetch SRR8146944
-
-# subject ID 02BA
-apptainer exec $CONTAINER prefetch SRR8146951
-
-# subject ID 18PR
-apptainer exec $CONTAINER prefetch SRR8146954
+for sample in "${vegan_samples[@]}"
+do
+    apptainer exec $CONTAINER prefetch $sample
+done
 
 # omnivore samples
+
+omnivore_samples=(
+    SRR8146956
+    SRR8146957
+    SRR8146969
+    SRR8146970
+    SRR8146971
+    SRR8146972
+    SRR8146975
+)
+
 cd $SCRATCH_DIR/omnivore
 
-# subject ID VOV08
-apptainer exec $CONTAINER prefetch SRR8146935
-
-# subject ID VOV104
-apptainer exec $CONTAINER prefetch SRR8146936
-
-# subject ID VOV03
-apptainer exec $CONTAINER prefetch SRR8146938
-
+for sample in "${omnivore_samples[@]}"
+do
+    apptainer exec $CONTAINER prefetch $sample
+done

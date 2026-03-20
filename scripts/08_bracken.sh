@@ -5,16 +5,15 @@ module load apptainer
 BASE=/scratch/ssaiphoo/metagenomics
 CONTAINERS=/home/ssaiphoo/work/metagenomics/containers
 
-# Standard database, but script was used for the 16 as well 
-# just slight modifications in the code 
+# Standard database used on 10 samples of both vegan and omnivore
 
 KRAKEN_DB=$BASE/kraken2_full
 
 # standard DB, 0.15 confidence
-KRAKEN_OUT=$BASE/results/kraken2_full_0.15_outputs
+KRAKEN_OUT=$BASE/results/kraken2_full_0.15_2outputs
 
 # output folder
-OUT=$BASE/results/bracken_0.15_full_outputs
+OUT=$BASE/results/bracken_0.15_full_2outputs
 
 READ_LEN=150
 
