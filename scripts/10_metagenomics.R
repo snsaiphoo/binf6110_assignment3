@@ -5,39 +5,46 @@ library(ggplot2)
 library(ANCOMBC)
 library(microbiome)
 
+# Load BIOM
 biom <- read_biom("../bracken_0.15_full.biom")
-biom
 
-# convert sparse matrix into a fill matrix
+# Extract OTU table
 otu <- as.matrix(biom_data(biom))
 
-# Low-abundance taxa were filtered to reduce sparsity and improve statistical robustness.
-otu <- otu[, colSums(otu) > 10]
-# transpose to fit R
-otu <- t(otu)
+# Filter taxa (rows = taxa)
+otu <- otu[rowSums(otu) > 10, ]
+
+# DO NOT transpose here
+# biom already has taxa as rows and samples as columns
 
 # Rarefaction 
 rarecurve(
-  otu,
+  t(otu),
   step = 10000,
   label = TRUE
 )
 
-otu_ps <- otu_table(t(otu), taxa_are_rows = TRUE)
+# Create phyloseq OTU table
+otu_ps <- otu_table(otu, taxa_are_rows = TRUE)
+
 tax <- observation_metadata(biom)
-tax <- as.matrix(tax)
+tax <- as.data.frame(tax)
 
-# Remove prefixes like g__, f__, etc.
+# Clean prefixes
 tax <- apply(tax, 2, function(x) gsub("^[a-z]__", "", x))
+tax <- as.data.frame(tax)
 
-tax_ps <- tax_table(tax)
+# Align with OTU taxa
+tax <- tax[rownames(otu), ]
 
-# Creating metadata
-sample_names <- colnames(otu_ps)
+tax_ps <- tax_table(as.matrix(tax))
+
+# Metadata
+sample_names_vec <- colnames(otu)   # ← correct source
 
 metadata <- data.frame(
-  Sample = sample_names,
-  Diet = ifelse(grepl("omnivore", sample_names, ignore.case = TRUE),
+  Sample = sample_names_vec,
+  Diet = ifelse(grepl("omnivore", sample_names_vec, ignore.case = TRUE),
                 "Omnivore", "Vegan")
 )
 
@@ -47,7 +54,20 @@ metadata$Sample <- NULL
 sample_ps <- sample_data(metadata)
 
 # Build phyloseq object
+
 physeq <- phyloseq(otu_ps, tax_ps, sample_ps)
+colnames(tax_table(physeq)) <- c(
+  "Kingdom",
+  "Phylum",
+  "Class",
+  "Order",
+  "Family",
+  "Genus",
+  "Species"
+)
+
+sample_names(physeq)
+taxa_names(physeq)
 
 # convert to relative abundance
 physeq_rel <- transform_sample_counts(physeq, function(x) x / sum(x))
@@ -184,50 +204,62 @@ nmds_plot
 
 ggsave("../figures/nmds_bray.png", plot = nmds_plot, width = 7, height = 5, dpi = 300)
 
-
-# ancomb - differential abundance 
+# ANCOM-BC2 - Differential Abundance
+library(phyloseq)
 library(dplyr)
+library(ggplot2)
+library(ANCOMBC)
 
-# Clean taxonomy (replace empty or NA with "Unknown")
+# 1. Clean taxonomy
 tax <- as.data.frame(tax_table(physeq))
-
 tax[is.na(tax)] <- "Unknown"
 tax[tax == ""] <- "Unknown"
-
 tax_table(physeq) <- tax_table(as.matrix(tax))
 
-physeq_filt <- physeq %>%
-  prune_taxa(taxa_sums(.) > 50, .) %>%
-  filter_taxa(function(x) sum(x > 0) > 2, TRUE)
+# 2. Aggregate to Family level 
+physeq_family <- tax_glom(physeq, "Family")
 
+physeq_family <- prune_taxa(taxa_sums(physeq_family) > 100, physeq_family)
+
+# 3. Run ANCOM-BC2
 ancombc.out <- ancombc2(
-  data = physeq_filt,
-  tax_level = "Genus",   # Genus 
+  data = physeq_family,
+  tax_level = "Family",
   fix_formula = "Diet",
+  rand_formula = NULL,
   group = "Diet",
-  p_adj_method = "holm",
-  prv_cut = 0,
-  lib_cut = 0
+  p_adj_method = "BH",
+  pseudo_sens = FALSE,   
+  prv_cut = 0.20,
+  lib_cut = 1000,
+  s0_perc = 0.05,
+  struc_zero = TRUE,
+  neg_lb = TRUE
 )
 
+# 4. Extract results
 res <- ancombc.out$res
-head(res)
 
-sig <- subset(res, q_Diet < 0.05)
+# Significant taxa
+sig <- subset(res, q_DietVegan < 0.05)
+
+# View results
+head(res)
 sig
 
-diff_plot <- ggplot(res, aes(x = lfc_Diet, y = reorder(taxon, lfc_Diet))) +
-  geom_point(aes(color = q_Diet < 0.05), size = 3) +
+top_res <- res %>%
+  arrange(q_DietVegan) %>%
+  head(20)
+
+ggplot(top_res, aes(x = lfc_DietVegan, y = reorder(taxon, lfc_DietVegan))) +
+  geom_point(aes(color = p_DietVegan < 0.05), size = 3) +
   geom_vline(xintercept = 0, color = "red") +
   labs(
-    title = "Differential Abundance (ANCOM-BC2)",
+    title = "Top Differentially Abundant Families",
     x = "Log Fold Change (Vegan vs Omnivore)",
-    y = "Genus"
+    y = "Family"
   ) +
   theme_minimal()
-
-diff_plot
-
 
 
 
