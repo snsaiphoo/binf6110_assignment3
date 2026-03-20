@@ -1,7 +1,9 @@
 /containers
 /raw_data
+/fastqc_reports
 *.sif
 *.fastq.gz
+
 
 .Rproj.user/
 .RData
