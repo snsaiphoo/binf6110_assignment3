@@ -215,33 +215,6 @@ nmds_plot
 
 # ggsave("../figures/nmds_bray.png", plot = nmds_plot, width = 7, height = 5, dpi = 300)
 
-# Hellinger transform (improves Bray-Curtis)
-otu_hell <- decostand(t(otu), method = "hellinger")
-
-set.seed(123)
-
-ord_nmds_hell <- metaMDS(
-  otu_hell,
-  distance = "bray",
-  k = 2,
-  trymax = 100
-)
-
-nmds_hell_df <- as.data.frame(ord_nmds_hell$points)
-nmds_hell_df$Diet <- metadata$Diet
-
-# check stress
-ord_nmds_hell$stress
-
-ggplot(nmds_hell_df, aes(x = MDS1, y = MDS2, color = Diet)) +
-  geom_point(size = 3) +
-  stat_ellipse(level = 0.95) +
-  labs(
-    title = "NMDS (Bray-Curtis)",
-    subtitle = paste("Stress =", round(ord_nmds_hell$stress, 3))
-  ) +
-  theme_minimal()
-
 # ANCOM-BC2 - Differential Abundance
 library(phyloseq)
 library(dplyr)
@@ -271,7 +244,7 @@ ancombc.out <- ancombc2(
   group = "Diet",
   p_adj_method = "BH",
   pseudo_sens = TRUE,   
-  prv_cut = 0.10,
+  prv_cut = 0.20,
   lib_cut = 1000,
   s0_perc = 0.05,
   struc_zero = TRUE,
