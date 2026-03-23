@@ -92,6 +92,10 @@ The overall quality of the reads supported the use of only light trimming. Based
 
 The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kraken2_full_10632220.err) and [`kraken2_full_10632220.out`](kraken2_full_10632220.out). Overall, vegan samples showed consistently higher classification rates compared to omnivore samples. This suggests that a larger proportion of reads in the vegan group matched reference sequences in the database, while the higher proportion of unclassified reads in omnivore samples may reflect greater microbial diversity or the presence of taxa not well represented in the reference database.
 
+As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species and genus-level abundances, correcting for biases associated with shared k-mers, and improving the accuracy of taxonomic profiles. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where further processing, normalization, and visualization were performed using packages such as phyloseq and ggplot2. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
+
+### Taxonomic Abundance in R
+
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
