@@ -94,16 +94,27 @@ The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kra
 
 As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species and genus-level abundances, correcting for biases associated with shared k-mers, and improving the accuracy of taxonomic profiles. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where further processing, normalization, and visualization were performed using packages such as `phyloseq` and `ggplot2`. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
 
-### Taxonomic Abundance in R
+### Family Level Abundance in R
 <div align="center">
 
-<img src="figures/taxonomic_abundance.png" width="700"/>
+<img src="figures/taxonomic_abundance_family.png" width="700"/>
 <br>
-<b>Figure 2. Taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the phylum level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different phyla. The gut microbiome in both groups is largely dominated by <i>Bacillota</i> and <i>Bacteroidota</i>. Low-abundance phyla were grouped into an "Other" category for clarity. Overall, the taxonomic profiles are similar between groups, although there appears to be a slightly higher proportion of <i>Bacillota</i> in the vegan samples.
+<b>Figure 2. Taxonomic composition by diet group at the family level.</b> Relative abundance of microbial taxa at the family level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different families. The gut microbiome in both groups is largely dominated by families such as <i>Bacteroidaceae</i>, <i>Lachnospiraceae</i>, and <i>Oscillospiraceae</i>. Lower-abundance families were grouped into an "Other" category for clarity. Overall, the taxonomic profiles appear broadly similar between diet groups, though some variation in the relative abundance of key families can be observed across samples.
 
 </div>
+
+### Genus Level Abundance in R
+<div align="center">
+
+<img src="figures/taxonomic_abundance_genus.png" width="700"/>
+<br>
+<b>Figure 3. Taxonomic composition by diet group at the genus level.</b> Relative abundance of microbial taxa at the genus level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different genera. The gut microbiome is dominated by genera such as <i>Bacteroides</i>, <i>Faecalibacterium</i>, <i>Blautia</i>, and <i>Alistipes</i>, with noticeable variability across samples. Lower-abundance genera were grouped into an "Other" category for clarity. While overall genus-level composition appears broadly similar between diet groups, variation in the relative abundance of specific genera suggests potential diet-associated differences.
+
+</div>
+
 <br/>
-While Figure 2 shows high-level trends, taxonomic composition was further examined at the species level for more detailed analysis.
+While Figures 2 and 3 show high-level trends, these compositions were further examined at the species level for more detailed analysis.
+
 <br/>
 <br/>
 
@@ -111,12 +122,12 @@ While Figure 2 shows high-level trends, taxonomic composition was further examin
 
 <img src="figures/taxonomic_abundance_species.png" width="700"/>
 <br>
-<b>Figure 3. Species-level taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the species level across all vegan and omnivore samples. Each bar represents an individual sample, with colors indicating the proportion of different species. To improve clarity, only the most abundant species are shown individually, while low-abundance species are grouped into an "Other" category. 
+<b>Figure 4. Species-level taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the species level across all vegan and omnivore samples. Each bar represents an individual sample, with colors indicating the proportion of different species. To improve clarity, only the most abundant species are shown individually, while low-abundance species are grouped into an "Other" category. 
 
 </div>
 <br/>
 
-It can be seen that _Prevotella copri_ observed in Figure 3 is of particular interest due to its association with diet. It appears more abundant in several vegan samples, consistent with its link to fiber-rich diets [1], while showing lower or more variable abundance in omnivore samples.
+It can be seen that _Prevotella copri_ observed in Figure 4 is of particular interest due to its association with diet. It appears more abundant in several vegan samples, consistent with its link to fiber-rich diets [1], while showing lower or more variable abundance in omnivore samples.
 
 ### Rarecurves for Vegan and Omnivore Samples
 <br/>
@@ -124,34 +135,34 @@ It can be seen that _Prevotella copri_ observed in Figure 3 is of particular int
 
 <img src="figures/rarecurve1.png" width="700"/>
 <br>
-<b>Figure 4. Rarefaction curves for vegan and omnivore samples.</b> Rarefaction analysis showing species richness as a function of sequencing depth for each sample, grouped by diet. Each curve represents an individual sample, with vegan samples shown in green and omnivore samples in orange. 
+<b>Figure 5. Rarefaction curves for vegan and omnivore samples.</b> Rarefaction analysis showing species richness as a function of sequencing depth for each sample, grouped by diet. Each curve represents an individual sample, with vegan samples shown in green and omnivore samples in orange. 
 
 </div>
 <br/>
-This rarefaction analysis, seen in Figure 4, serves as an initial exploratory step to assess sequencing depth (sample size) and species richness across samples. The general plateauing of curves suggests that the data are adequate for differential abundance analyses.
+This rarefaction analysis, seen in Figure 5, serves as an initial exploratory step to assess sequencing depth (sample size) and species richness across samples. The general plateauing of curves suggests that the data are adequate for differential abundance analyses.
 
 ### Alpha Diversity Analysis
 <div align="center">
 
 <img src="figures/alpha_diversity.png" width="700"/>
 <br>
-<b>Figure 5. Alpha diversity comparison between diet groups.</b> Alpha diversity metrics comparing omnivore and vegan samples using observed species richness (left) and Shannon diversity index (right). Boxplots summarize the distribution of diversity values within each group, with individual points representing samples. Observed richness reflects the total number of detected species, while the Shannon index accounts for both richness and evenness of species distribution. 
+<b>Figure 6. Alpha diversity comparison between diet groups.</b> Alpha diversity metrics comparing omnivore and vegan samples using observed species richness (left) and Shannon diversity index (right). Boxplots summarize the distribution of diversity values within each group, with individual points representing samples. Observed richness reflects the total number of detected species, while the Shannon index accounts for both richness and evenness of species distribution. 
 
 </div>
 <br/>
-Overall, the results shown in Figure 5 indicate that omnivore samples tend to have higher diversity, especially in terms of the number of species. Differences in Shannon diversity are smaller but still suggest slightly more even, diverse microbial communities in omnivore samples. Statistical testing using the Wilcoxon rank-sum test found a significant difference in observed richness (p = 0.0185), but not in Shannon diversity (p = 0.393). This suggests that while there may be a difference in species counts, the overall evidence for differences in diversity between groups is limited.
+Overall, the results shown in Figure 6 indicate that omnivore samples tend to have higher diversity, especially in terms of the number of species. Differences in Shannon diversity are smaller but still suggest slightly more even, diverse microbial communities in omnivore samples. Statistical testing using the Wilcoxon rank-sum test found a significant difference in observed richness (p = 0.0185), but not in Shannon diversity (p = 0.393). This suggests that while there may be a difference in species counts, the overall evidence for differences in diversity between groups is limited.
 
 ### Beta Diversity Analysis
 <div align="center">
 
 <img src="figures/beta_diversity_pcoa.png" width="700"/>
 <br>
-<b>Figure 6. Beta diversity (PCoA) of Bray–Curtis distances.</b> Principal coordinates analysis (PCoA) plot based on Bray–Curtis dissimilarity, showing differences in microbial community composition between omnivore and vegan samples. Each point represents a sample, colored by diet group. Samples that are closer together have more similar microbial communities, while those further apart are more different.
+<b>Figure 7. Beta diversity (PCoA) of Bray–Curtis distances.</b> Principal coordinates analysis (PCoA) plot based on Bray–Curtis dissimilarity, showing differences in microbial community composition between omnivore and vegan samples. Each point represents a sample, colored by diet group. Samples that are closer together have more similar microbial communities, while those further apart are more different.
 
 </div>
 <br/>
 
-The beta diversity analysis in Figure 6 shows some separation by diet, although there is still overlap between groups. This suggests that while diet may influence gut microbial composition, there is also variability within each group. PERMANOVA testing was not statistically significant (p = 0.232), indicating that these differences are not strong. More samples would likely be needed to better detect any consistent patterns between groups.
+The beta diversity analysis in Figure 7 shows some separation by diet, although there is still overlap between groups. This suggests that while diet may influence gut microbial composition, there is also variability within each group. PERMANOVA testing was not statistically significant (p = 0.232), indicating that these differences are not strong. More samples would likely be needed to better detect any consistent patterns between groups.
 
 ### Differential Abundance Analysis - Vegan and Omnivore
 #### ANCOM-BC2 Family Level
@@ -159,22 +170,22 @@ The beta diversity analysis in Figure 6 shows some separation by diet, although 
 
 <img src="figures/sda_families.png" width="700"/>
 <br>
-<b>Figure 7. Differentially abundant microbial families (ANCOM-BC2).</b> Differential abundance analysis at the family level comparing vegan and omnivore samples using ANCOM-BC2 with Benjamini–Hochberg correction. Each point represents a microbial family, with the x-axis showing the log fold change (vegan vs omnivore). Positive values indicate higher abundance in vegan samples. All displayed families were statistically significant, indicating meaningful differences in abundance between diet groups.
+<b>Figure 8. Differentially abundant microbial families (ANCOM-BC2).</b> Differential abundance analysis at the family level comparing vegan and omnivore samples using ANCOM-BC2 with Benjamini–Hochberg correction. Each point represents a microbial family, with the x-axis showing the log fold change (vegan vs omnivore). Positive values indicate higher abundance in vegan samples. All displayed families were statistically significant, indicating meaningful differences in abundance between diet groups.
 
 </div>
 <br/>
-Figure 7 shows that all identified families exhibit positive log2 fold-change values, indicating greater abundance in vegan samples than in omnivore samples. Because these differences are also statistically significant, this could suggest that the observed increases are unlikely to be due to random variation and may be associated with dietary differences. To further investigate this, the next step examines genus-level differential abundance to see whether the pattern still holds. 
+Figure 8 shows that all identified families exhibit positive log2 fold-change values, indicating greater abundance in vegan samples than in omnivore samples. Because these differences are also statistically significant, this could suggest that the observed increases are unlikely to be due to random variation and may be associated with dietary differences. To further investigate this, the next step examines genus-level differential abundance to see whether the pattern still holds. 
 
 #### ANCOM-BC2 Genus Level
 <div align="center">
 
 <img src="figures/top_genera_effect_size.png" width="700"/>
 <br>
-<b>Figure 8. Top differentially abundant genera by effect size.</b> Differential abundance results at the genus level showing the top taxa ranked by log2 fold change between vegan and omnivore samples. Each point represents a genus, with positive values indicating higher abundance in vegan samples (blue) and negative values indicating higher abundance in omnivore samples (red). These results are based solely on effect size, as no genera were statistically significant.
+<b>Figure 9. Top differentially abundant genera by effect size.</b> Differential abundance results at the genus level showing the top taxa ranked by log2 fold change between vegan and omnivore samples. Each point represents a genus, with positive values indicating higher abundance in vegan samples (blue) and negative values indicating higher abundance in omnivore samples (red). These results are based solely on effect size, as no genera were statistically significant.
 
 </div>
 <br/>
-Figure 8 highlights trends based solely on log2 fold change values, as no genera were significant. While these differences suggest potential shifts in abundance across diet groups, they should be interpreted with caution, as they are not statistically significant. The differences between the family- and genus-level results are likely due to the higher detail and variability at the genus level. At the family level, multiple genera are grouped together, making it easier to detect overall patterns. When looking at genera separately, the data becomes more variable and harder to find significant differences, especially with a small sample size. Because of this, the results at the family level should be interpreted with caution, as they may not hold at more specific taxonomic levels.
+Figure 9 highlights trends based solely on log2 fold change values, as no genera were significant. While these differences suggest potential shifts in abundance across diet groups, they should be interpreted with caution, as they are not statistically significant. The differences between the family- and genus-level results are likely due to the higher detail and variability at the genus level. At the family level, multiple genera are grouped together, making it easier to detect overall patterns. When looking at genera separately, the data becomes more variable and harder to find significant differences, especially with a small sample size. Because of this, the results at the family level should be interpreted with caution, as they may not hold at more specific taxonomic levels.
 
 ### Discussion
 
