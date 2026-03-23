@@ -217,3 +217,4 @@ The results of this analysis are presented above, and the following sections dis
 [16] S. Dabdoub, “kraken-biom,” GitHub, Sep. 15, 2023. https://github.com/smdabdoub/kraken-biom  <br/>
 [17] Shyamal Peddada and H. Lin, “Multi-group Analysis of Compositions of Microbiomes with Covariate Adjustments and Repeated Measures,” Research Square (Research Square), May 2023, doi: https://doi.org/10.21203/rs.3.rs-2778207/v1.  <br/>
 [18] Huang Lin, “ANCOM-BC2 Tutorial,” Bioconductor.org, Oct. 29, 2025. https://bioconductor.org/packages/release/bioc/vignettes/ANCOMBC/inst/doc/ANCOMBC2.html (accessed Mar. 19, 2026).  <br/>
+[19] P. Cronin, S. A. Joyce, P. W. O’Toole, and E. M. O’Connor, “Dietary Fibre Modulates the Gut Microbiota,” Nutrients, vol. 13, no. 5, p. 1655, May 2021, doi: https://doi.org/10.3390/nu13051655.  <br/>
