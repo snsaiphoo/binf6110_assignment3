@@ -116,8 +116,8 @@ As mentioned in the methods, `Bracken` was used to refine `Kraken2` classificati
 While Figures 2 and 3 show high-level trends, these compositions were further examined at the species level for more detailed analysis.
 
 <br/>
-<br/>
 
+### Species Level Abundance in R
 <div align="center">
 
 <img src="figures/taxonomic_abundance_species.png" width="700"/>
