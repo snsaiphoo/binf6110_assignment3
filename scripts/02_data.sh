@@ -10,6 +10,9 @@ failed_samples=()
 # validate the vegan samples were prefetched properly
 
 vegan_samples=(
+    SRR8146944
+    SRR8146951
+    SRR8146954
     SRR8146952
     SRR8146955
     SRR8146959
@@ -21,19 +24,24 @@ vegan_samples=(
 
 cd $SCRATCH_DIR/vegan
 
+# for loop iterating through the different samples to validate their download
+# same is done for the omnivore samples
+
 for srr in "${vegan_samples[@]}"
 do
-    echo "running $srr - vegan"
     if ! apptainer exec $CONTAINER vdb-validate $srr; then
-        echo "FAILED $srr - vegan"
+        echo "failed $srr - vegan"
         failed_samples+=("$srr (vegan)")
     else
-        echo "PASSED $srr - vegan"
+        echo "passed $srr - vegan"
     fi
 done
 
 # validating the omnivore samples
 omnivore_samples=(
+    SRR8146935
+    SRR8146936
+    SRR8146938
     SRR8146956
     SRR8146957
     SRR8146969
@@ -47,24 +55,20 @@ cd $SCRATCH_DIR/omnivore
 
 for srr in "${omnivore_samples[@]}"
 do
-    echo "running $srr - omnivore"
-    
     if ! apptainer exec $CONTAINER vdb-validate $srr; then
-        echo "FAILED  $srr - omnivore"
+        echo "failed  $srr - omnivore"
         failed_samples+=("$srr (omnivore)")
     else
-        echo "PASSED $srr"
+        echo "passed $srr"
     fi
 done
 
-echo "-----------------------------"
-
 if [ ${#failed_samples[@]} -eq 0 ]; then
-    echo "All samples passed"
+    echo "samples passed"
 else
     echo "failed samples"
     for sample in "${failed_samples[@]}"
     do
-        echo " - $sample"
+        echo "$sample"
     done
 fi

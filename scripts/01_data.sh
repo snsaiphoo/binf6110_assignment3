@@ -1,4 +1,6 @@
 #!/bin/bash
+# Using the SRA Toolkit to prefetch the SRR samples
+# 10 vegan and 10 omnivores
 
 module load apptainer
 
@@ -11,6 +13,9 @@ mkdir -p $SCRATCH_DIR/omnivore
 # vegan samples
 
 vegan_samples=(
+    SRR8146944
+    SRR8146951
+    SRR8146954
     SRR8146952
     SRR8146955
     SRR8146959
@@ -30,6 +35,9 @@ done
 # omnivore samples
 
 omnivore_samples=(
+    SRR8146935
+    SRR8146936
+    SRR8146938
     SRR8146956
     SRR8146957
     SRR8146969

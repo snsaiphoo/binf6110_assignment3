@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# performing light trimming on both the vegan and omnivore samples
+
 module load apptainer
 
 BASE_DIR=$SCRATCH/metagenomics
@@ -7,6 +9,7 @@ CONTAINERS=$HOME/work/metagenomics/containers
 
 THREADS=8
 
+# to hold failed samples if trimming doesn't work properly 
 failed_samples=()
 
 # vegan samples
@@ -25,6 +28,11 @@ vegan_samples=(
 )
 
 cd $BASE_DIR/raw_data/vegan
+
+# for loop to trim the vegan samples, 
+# removes low-quality bases -q 20, and short reads -l 50 
+# quality reports are should in the fastp_html
+# the same is done for the omnivore samples
 
 for srr in "${vegan_samples[@]}"
 do

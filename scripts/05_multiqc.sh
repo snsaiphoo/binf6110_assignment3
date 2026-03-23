@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# consolidate the FASTQC results into one using MultiQC
+
 module load apptainer
 
 BASE_DIR=$HOME/work/metagenomics

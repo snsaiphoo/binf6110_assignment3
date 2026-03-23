@@ -8,8 +8,12 @@ PIGZ_CONTAINER=/home/ssaiphoo/work/metagenomics/containers/pigz.sif
 SCRATCH_DIR=$SCRATCH/metagenomics/raw_data
 THREADS=8
 
+# list of all vegan and omnivore samples
 vegan_samples=(SRR8146944 SRR8146951 SRR8146954 SRR8146952 SRR8146955 SRR8146959 SRR8146960 SRR8146961 SRR8146963 SRR8146965)
 omnivore_samples=(SRR8146935 SRR8146936 SRR8146938 SRR8146956 SRR8146957 SRR8146969 SRR8146970 SRR8146971 SRR8146972 SRR8146975)
+
+# for the vegan samples run the for loop to convert to FASTQ format and using PIGZ to compress them 
+# the same is done for the omnivore samples below
 
 cd $SCRATCH_DIR/vegan
 for srr in "${vegan_samples[@]}"

@@ -32,6 +32,11 @@ vegan_samples=(
     SRR8146965
 )
 
+# this for loop ensures the paired-end reads exist for Kraken2 to run 
+# reads are processed in paired, compressed format with a confidence threshold of 0.15 and quick mode enabled.
+# fail/success is tracked per run 
+# process repeated for the omnivore samples after the vegans 
+
 cd $BASE/raw_data/vegan
 
 for SAMPLE in "${vegan_samples[@]}"
