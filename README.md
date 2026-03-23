@@ -90,7 +90,7 @@ The overall quality of the reads supported the use of only light trimming. Based
 
 <br>
 
-The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kraken2_full_10632220.err). Overall, vegan samples showed consistently higher classification rates compared to omnivore samples. A larger proportion of reads in the vegan group matched reference sequences in the database, whereas omnivore samples contained a higher proportion of unclassified reads.
+The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kraken2_full_10632220.err), the first 10 are vegan samples, and the other 10 are omnivore samples. Overall, vegan samples showed consistently higher classification rates compared to omnivore samples. A larger proportion of reads in the vegan group matched reference sequences in the database, whereas omnivore samples contained a higher proportion of unclassified reads.
 
 As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species- and genus-level abundances and correcting for biases arising from shared k-mers. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where processing, normalization, and visualization were performed using packages such as `phyloseq` and `ggplot2`. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
 
