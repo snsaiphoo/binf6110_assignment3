@@ -94,21 +94,21 @@ The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kra
 
 As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species- and genus-level abundances and correcting for biases arising from shared k-mers. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where processing, normalization, and visualization were performed using packages such as `phyloseq` and `ggplot2`. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
 
-### Family Level Abundance in R
+### Taxonomic Abundance at the Family Level
 <div align="center">
 
 <img src="figures/taxonomic_abundance_family.png" width="700"/>
 <br>
-<b>Figure 2. Taxonomic composition by diet group at the family level.</b> Relative abundance of microbial taxa at the family level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different families. The gut microbiome in both groups is largely dominated by families such as <i>Bacteroidaceae</i>, <i>Lachnospiraceae</i>, and <i>Oscillospiraceae</i>. Lower-abundance families were grouped into an "Other" category for clarity. Overall, the taxonomic profiles appear broadly similar between diet groups, though some variation in the relative abundance of key families can be observed across samples.
+<b>Figure 2. Taxonomic abundance by diet group at the family level.</b> Relative abundance of microbial taxa at the family level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different families. The gut microbiome in both groups is largely dominated by families such as <i>Bacteroidaceae</i>, <i>Lachnospiraceae</i>, and <i>Oscillospiraceae</i>. Lower-abundance families were grouped into an "Other" category for clarity. Overall, the taxonomic profiles appear broadly similar between diet groups, though some variation in the relative abundance of key families can be observed across samples.
 
 </div>
 
-### Genus Level Abundance in R
+### Taxonomic Abundance at the Genus Level 
 <div align="center">
 
 <img src="figures/taxonomic_abundance_genus.png" width="700"/>
 <br>
-<b>Figure 3. Taxonomic composition by diet group at the genus level.</b> Relative abundance of microbial taxa at the genus level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different genera. The gut microbiome is dominated by genera such as <i>Bacteroides</i>, <i>Faecalibacterium</i>, <i>Blautia</i>, and <i>Alistipes</i>, with noticeable variability across samples. Lower-abundance genera were grouped into an "Other" category for clarity.
+<b>Figure 3. Taxonomic abundance by diet group at the genus level.</b> Relative abundance of microbial taxa at the genus level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different genera. The gut microbiome is dominated by genera such as <i>Bacteroides</i>, <i>Faecalibacterium</i>, <i>Blautia</i>, and <i>Alistipes</i>, with noticeable variability across samples. Lower-abundance genera were grouped into an "Other" category for clarity.
 
 </div>
 
@@ -117,12 +117,12 @@ While Figures 2 and 3 show high-level trends, these compositions were further ex
 
 <br/>
 
-### Species Level Abundance in R
+###  Taxonomic Abundance at the Species Level
 <div align="center">
 
 <img src="figures/taxonomic_abundance_species.png" width="700"/>
 <br>
-<b>Figure 4. Species-level taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the species level across all vegan and omnivore samples. Each bar represents an individual sample, with colors indicating the proportion of different species. To improve clarity, only the most abundant species are shown individually, while low-abundance species are grouped into an "Other" category. 
+<b>Figure 4. Species-level taxonomic abundance by diet group.</b> Relative abundance of microbial taxa at the species level across all vegan and omnivore samples. Each bar represents an individual sample, with colors indicating the proportion of different species. To improve clarity, only the most abundant species are shown individually, while low-abundance species are grouped into an "Other" category. 
 
 </div>
 <br/>
@@ -188,6 +188,15 @@ Figure 8 shows that all identified families exhibit positive log2 fold-change va
 Figure 9 presents genus-level results based on log2 fold change values, as no genera were statistically significant. The increased variability observed at the genus level, compared to the family level, reflects the finer taxonomic resolution, where individual genera are analyzed separately rather than grouped. As a result, no statistically significant differences were detected at the genus level.
 
 ### Discussion
+The results of this analysis are presented above, and the following sections discuss and interpret these findings in the context of gut microbial composition in vegan and omnivore samples.
+
+#### Taxonomic Composition 
+
+#### Alpha and Beta Diversity
+
+#### Differential Abundance 
+
+### Conclusion
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
