@@ -200,6 +200,11 @@ At the species level, Figure 4 shows greater variation between samples. _Prevote
 Overall, while vegan and omnivore microbiomes share a similar core composition, differences in the abundance of specific taxa become more apparent at the genus and species levels.
 
 #### Alpha and Beta Diversity
+Alpha diversity measures diversity within each sample, including the number of taxa present and their evenness of distribution. Beta diversity, in contrast, compares differences in microbial communities between samples or groups.
+
+The alpha diversity results shown in Figure 6 indicate that omnivore samples generally contain a higher number of taxa than vegan samples. This means that more species are present in omnivore samples, while the distribution of those species remains similar between the two diet groups. Overall, this suggests only modest differences in diversity between vegan and omnivore microbiomes.
+
+Beta diversity clustering, shown in Figure 7, shows some separation between vegan and omnivore samples, but there is still clear overlap. This suggests that diet may influence microbial composition, but not strongly enough to clearly distinguish the groups. Differences between individuals likely play a larger role, and a larger sample size may help reveal more consistent patterns. Overall, these results suggest that differences between vegan and omnivore microbiomes are not strong when considering diversity alone.
 
 #### Differential Abundance 
 
