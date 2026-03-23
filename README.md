@@ -92,10 +92,52 @@ The overall quality of the reads supported the use of only light trimming. Based
 
 The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kraken2_full_10632220.err) and [`kraken2_full_10632220.out`](kraken2_full_10632220.out). Overall, vegan samples showed consistently higher classification rates compared to omnivore samples. This suggests that a larger proportion of reads in the vegan group matched reference sequences in the database, while the higher proportion of unclassified reads in omnivore samples may reflect greater microbial diversity or the presence of taxa not well represented in the reference database.
 
-As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species and genus-level abundances, correcting for biases associated with shared k-mers, and improving the accuracy of taxonomic profiles. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where further processing, normalization, and visualization were performed using packages such as phyloseq and ggplot2. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
+As mentioned in the methods, `Bracken` was used to refine `Kraken2` classifications by re-estimating species and genus-level abundances, correcting for biases associated with shared k-mers, and improving the accuracy of taxonomic profiles. The resulting `Bracken` outputs were then converted into BIOM format using `kraken-biom`, generating a structured feature table suitable for downstream analysis. This BIOM table was imported into `R`, where further processing, normalization, and visualization were performed using packages such as `phyloseq` and `ggplot2`. All subsequent analyses and figures were generated in R to ensure consistent and reproducible exploration of gut microbial composition in vegan and omnivore samples.
 
 ### Taxonomic Abundance in R
+<div align="center">
 
+<img src="figures/taxonomic_abundance.png" width="700"/>
+<br>
+<b>Figure 2. Taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the phylum level across all samples, grouped by diet (omnivore and vegan). Each bar represents an individual sample, with colors indicating the proportion of different phyla. The gut microbiome in both groups is largely dominated by <i>Bacillota</i> and <i>Bacteroidota</i>. Low-abundance phyla were grouped into an "Other" category for clarity. Overall, the taxonomic profiles are similar between groups, although there appears to be a slightly higher proportion of <i>Bacillota</i> in the vegan samples.
+
+</div>
+<br/>
+While Figure 2 shows high-level trends, taxonomic composition was further examined at the species level for more detailed analysis.
+<br/>
+<br/>
+
+<div align="center">
+
+<img src="figures/taxonomic_abundance_species.png" width="700"/>
+<br>
+<b>Figure 3. Species-level taxonomic composition by diet group.</b> Relative abundance of microbial taxa at the species level across all vegan and omnivore samples. Each bar represents an individual sample, with colors indicating the proportion of different species. To improve clarity, only the most abundant species are shown individually, while low-abundance species are grouped into an "Other" category. 
+
+</div>
+<br/>
+
+It can be seen that _Prevotella copri_ observed in Figure 3 is of particular interest due to its association with diet. It appears more abundant in several vegan samples, consistent with its link to fiber-rich diets [1], while showing lower or more variable abundance in omnivore samples.
+
+### Rarecurves for Vegan and Omnivore Samples
+<br/>
+<div align="center">
+
+<img src="figures/rarecurve1.png" width="700"/>
+<br>
+<b>Figure 4. Rarefaction curves for vegan and omnivore samples.</b> Rarefaction analysis showing species richness as a function of sequencing depth for each sample, grouped by diet. Each curve represents an individual sample, with vegan samples shown in green and omnivore samples in orange. 
+
+</div>
+
+This rarefaction analysis, seen in Figure 4, serves as an initial exploratory step to assess sequencing depth (sample size) and species richness across samples. The general plateauing of curves suggests that the data are adequate for differential abundance analyses.
+
+### Alpha Diversity Analysis
+<div align="center">
+
+<img src="figures/alpha_diversity.png" width="700"/>
+<br>
+<b>Figure 5. Alpha diversity comparison between diet groups.</b> Alpha diversity metrics comparing omnivore and vegan samples using observed species richness (left) and Shannon diversity index (right). Boxplots summarize the distribution of diversity values within each group, with individual points representing samples. Observed richness reflects the total number of detected species, while the Shannon index accounts for both richness and evenness of species distribution. Omnivore samples generally show higher observed richness and slightly higher Shannon diversity compared to vegan samples, indicating greater microbial diversity and evenness within this group.
+
+</div>
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
