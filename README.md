@@ -127,7 +127,7 @@ It can be seen that _Prevotella copri_ observed in Figure 3 is of particular int
 <b>Figure 4. Rarefaction curves for vegan and omnivore samples.</b> Rarefaction analysis showing species richness as a function of sequencing depth for each sample, grouped by diet. Each curve represents an individual sample, with vegan samples shown in green and omnivore samples in orange. 
 
 </div>
-
+<br/>
 This rarefaction analysis, seen in Figure 4, serves as an initial exploratory step to assess sequencing depth (sample size) and species richness across samples. The general plateauing of curves suggests that the data are adequate for differential abundance analyses.
 
 ### Alpha Diversity Analysis
@@ -135,9 +135,48 @@ This rarefaction analysis, seen in Figure 4, serves as an initial exploratory st
 
 <img src="figures/alpha_diversity.png" width="700"/>
 <br>
-<b>Figure 5. Alpha diversity comparison between diet groups.</b> Alpha diversity metrics comparing omnivore and vegan samples using observed species richness (left) and Shannon diversity index (right). Boxplots summarize the distribution of diversity values within each group, with individual points representing samples. Observed richness reflects the total number of detected species, while the Shannon index accounts for both richness and evenness of species distribution. Omnivore samples generally show higher observed richness and slightly higher Shannon diversity compared to vegan samples, indicating greater microbial diversity and evenness within this group.
+<b>Figure 5. Alpha diversity comparison between diet groups.</b> Alpha diversity metrics comparing omnivore and vegan samples using observed species richness (left) and Shannon diversity index (right). Boxplots summarize the distribution of diversity values within each group, with individual points representing samples. Observed richness reflects the total number of detected species, while the Shannon index accounts for both richness and evenness of species distribution. 
 
 </div>
+<br/>
+Overall, the results shown in Figure 5 indicate that omnivore samples tend to have higher diversity, especially in terms of the number of species. Differences in Shannon diversity are smaller but still suggest slightly more even, diverse microbial communities in omnivore samples. Statistical testing using the Wilcoxon rank-sum test found a significant difference in observed richness (p = 0.0185), but not in Shannon diversity (p = 0.393). This suggests that while there may be a difference in species counts, the overall evidence for differences in diversity between groups is limited.
+
+### Beta Diversity Analysis
+<div align="center">
+
+<img src="figures/beta_diversity_pcoa.png" width="700"/>
+<br>
+<b>Figure 6. Beta diversity (PCoA) of Bray–Curtis distances.</b> Principal coordinates analysis (PCoA) plot based on Bray–Curtis dissimilarity, showing differences in microbial community composition between omnivore and vegan samples. Each point represents a sample, colored by diet group. Samples that are closer together have more similar microbial communities, while those further apart are more different.
+
+</div>
+<br/>
+
+The beta diversity analysis in Figure 6 shows some separation by diet, although there is still overlap between groups. This suggests that while diet may influence gut microbial composition, there is also variability within each group. PERMANOVA testing was not statistically significant (p = 0.232), indicating that these differences are not strong. More samples would likely be needed to better detect any consistent patterns between groups.
+
+### Differential Abundance Analysis - Vegan and Omnivore
+#### ANCOM-BC2 Family Level
+<div align="center">
+
+<img src="figures/sda_families.png" width="700"/>
+<br>
+<b>Figure 7. Differentially abundant microbial families (ANCOM-BC2).</b> Differential abundance analysis at the family level comparing vegan and omnivore samples using ANCOM-BC2 with Benjamini–Hochberg correction. Each point represents a microbial family, with the x-axis showing the log fold change (vegan vs omnivore). Positive values indicate higher abundance in vegan samples. All displayed families were statistically significant, indicating meaningful differences in abundance between diet groups.
+
+</div>
+<br/>
+Figure 7 shows that all identified families exhibit positive log2 fold-change values, indicating greater abundance in vegan samples than in omnivore samples. Because these differences are also statistically significant, this could suggest that the observed increases are unlikely to be due to random variation and may be associated with dietary differences. To further investigate this, the next step examines genus-level differential abundance to see whether the pattern still holds. 
+
+#### ANCOM-BC2 Genus Level
+<div align="center">
+
+<img src="figures/top_genera_effect_size.png" width="700"/>
+<br>
+<b>Figure 8. Top differentially abundant genera by effect size.</b> Differential abundance results at the genus level showing the top taxa ranked by log2 fold change between vegan and omnivore samples. Each point represents a genus, with positive values indicating higher abundance in vegan samples and negative values indicating higher abundance in omnivore samples. These results are based solely on effect size, as no genera were statistically significant.
+
+</div>
+
+No genera were identified as statistically significant; therefore, Figure 8 highlights trends based on log2 fold change values alone. While these differences suggest potential shifts in abundance across diet groups, they should be interpreted with caution, as they are not statistically significant.
+
+The differences between the family- and genus-level results are likely due to the higher detail and variability at the genus level. At the family level, multiple genera are grouped together, making it easier to detect overall patterns. When looking at genera separately, the data becomes more variable and harder to find significant differences, especially with a small sample size. Because of this, the results at the family level should be interpreted with caution, as they may not hold at more specific taxonomic levels.
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
