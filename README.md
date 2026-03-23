@@ -234,3 +234,5 @@ Beta diversity clustering, shown in Figure 7, shows some separation between vega
 [21] R. Martín et al., “Faecalibacterium: a bacterial genus with promising human health applications,” Fems Microbiology Reviews, vol. 47, no. 4, Jul. 2023, doi: https://doi.org/10.1093/femsre/fuad039. <br/>
 [22] J. Fu et al., “Gut commensal Alistipes as a potential pathogenic factor in colorectal cancer,” Discover Oncology, vol. 15, no. 1, Sep. 2024, doi: https://doi.org/10.1007/s12672-024-01393-3. <br/>
 [23] Nehal Adel Abdelsalam, S. M. Hegazy, and R. K. Aziz, “The curious case of Prevotella copri,” Gut microbes, vol. 15, no. 2, Sep. 2023, doi: https://doi.org/10.1080/19490976.2023.2249152. <br/>
+[24] H. Lin and S. D. Peddada, “Analysis of compositions of microbiomes with bias correction,” Nature Communications, vol. 11, no. 1, p. 3514, Jul. 2020, doi: https://doi.org/10.1038/s41467-020-17041-7. <br/>
+[25] G. B. Gloor, J. M. Macklaim, V. Pawlowsky-Glahn, and J. J. Egozcue, “Microbiome Datasets Are Compositional: And This Is Not Optional,” Frontiers in Microbiology, vol. 8, Nov. 2017, doi: https://doi.org/10.3389/fmicb.2017.02224. <br/>
