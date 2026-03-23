@@ -1,0 +1,88 @@
+Job started at: Fri Mar 20 03:00:38 EDT 2026
+Running on node: c675.nibi.sharcnet
+==============================
+Running Kraken2: SRR8146944 (vegan)
+==============================
+Completed SRR8146944
+==============================
+Running Kraken2: SRR8146951 (vegan)
+==============================
+Completed SRR8146951
+==============================
+Running Kraken2: SRR8146954 (vegan)
+==============================
+Completed SRR8146954
+==============================
+Running Kraken2: SRR8146952 (vegan)
+==============================
+Completed SRR8146952
+==============================
+Running Kraken2: SRR8146955 (vegan)
+==============================
+Completed SRR8146955
+==============================
+Running Kraken2: SRR8146959 (vegan)
+==============================
+Completed SRR8146959
+==============================
+Running Kraken2: SRR8146960 (vegan)
+==============================
+Completed SRR8146960
+==============================
+Running Kraken2: SRR8146961 (vegan)
+==============================
+Completed SRR8146961
+==============================
+Running Kraken2: SRR8146963 (vegan)
+==============================
+Completed SRR8146963
+==============================
+Running Kraken2: SRR8146965 (vegan)
+==============================
+Completed SRR8146965
+==============================
+Running Kraken2: SRR8146935 (omnivore)
+==============================
+Completed SRR8146935
+==============================
+Running Kraken2: SRR8146936 (omnivore)
+==============================
+Completed SRR8146936
+==============================
+Running Kraken2: SRR8146938 (omnivore)
+==============================
+Completed SRR8146938
+==============================
+Running Kraken2: SRR8146956 (omnivore)
+==============================
+Completed SRR8146956
+==============================
+Running Kraken2: SRR8146957 (omnivore)
+==============================
+Completed SRR8146957
+==============================
+Running Kraken2: SRR8146969 (omnivore)
+==============================
+Completed SRR8146969
+==============================
+Running Kraken2: SRR8146970 (omnivore)
+==============================
+Completed SRR8146970
+==============================
+Running Kraken2: SRR8146971 (omnivore)
+==============================
+Completed SRR8146971
+==============================
+Running Kraken2: SRR8146972 (omnivore)
+==============================
+Completed SRR8146972
+==============================
+Running Kraken2: SRR8146975 (omnivore)
+==============================
+Completed SRR8146975
+
+==============================
+KRAKEN2 SUMMARY
+==============================
+All samples processed successfully
+Job finished at: Fri Mar 20 04:38:42 EDT 2026
