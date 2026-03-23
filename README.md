@@ -170,13 +170,13 @@ Figure 7 shows that all identified families exhibit positive log2 fold-change va
 
 <img src="figures/top_genera_effect_size.png" width="700"/>
 <br>
-<b>Figure 8. Top differentially abundant genera by effect size.</b> Differential abundance results at the genus level showing the top taxa ranked by log2 fold change between vegan and omnivore samples. Each point represents a genus, with positive values indicating higher abundance in vegan samples and negative values indicating higher abundance in omnivore samples. These results are based solely on effect size, as no genera were statistically significant.
+<b>Figure 8. Top differentially abundant genera by effect size.</b> Differential abundance results at the genus level showing the top taxa ranked by log2 fold change between vegan and omnivore samples. Each point represents a genus, with positive values indicating higher abundance in vegan samples (blue) and negative values indicating higher abundance in omnivore samples (red). These results are based solely on effect size, as no genera were statistically significant.
 
 </div>
+<br/>
+Figure 8 highlights trends based solely on log2 fold change values, as no genera were significant. While these differences suggest potential shifts in abundance across diet groups, they should be interpreted with caution, as they are not statistically significant. The differences between the family- and genus-level results are likely due to the higher detail and variability at the genus level. At the family level, multiple genera are grouped together, making it easier to detect overall patterns. When looking at genera separately, the data becomes more variable and harder to find significant differences, especially with a small sample size. Because of this, the results at the family level should be interpreted with caution, as they may not hold at more specific taxonomic levels.
 
-No genera were identified as statistically significant; therefore, Figure 8 highlights trends based on log2 fold change values alone. While these differences suggest potential shifts in abundance across diet groups, they should be interpreted with caution, as they are not statistically significant.
-
-The differences between the family- and genus-level results are likely due to the higher detail and variability at the genus level. At the family level, multiple genera are grouped together, making it easier to detect overall patterns. When looking at genera separately, the data becomes more variable and harder to find significant differences, especially with a small sample size. Because of this, the results at the family level should be interpreted with caution, as they may not hold at more specific taxonomic levels.
+### Discussion
 
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
