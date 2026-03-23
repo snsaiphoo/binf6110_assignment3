@@ -63,6 +63,36 @@ Differential abundance analysis was conducted using `ANCOM-BC2` [17] at both fam
 
 ## Results
 
+### Quality Control Results from MultiQC
+<div align="center">
+
+<img src="figures/fastqc-status-check-heatmap.png" width="600"/>
+<br>
+<b>Figure 1. MultiQC summary of FastQC results.</b> FastQC status check heatmap (MultiQC) summarizing quality control metrics across 40 samples (10 vegan and 10 omnivore samples, paired-end). Each row represents an individual sample, and each column corresponds to a FastQC module. Green indicates passing metrics, yellow indicates warnings, and red indicates failures. Most samples passed key quality metrics, with occasional warnings observed in per-base sequence content and sequence length distribution, and a single failure was detected in per-sequence GC content.
+
+</div>
+<br>
+
+The overall quality of the reads supported the use of only light trimming. Based on this, conservative filtering parameters were applied with `fastp` (-q 20, -l 50) to remove low-quality bases and very short reads, while retaining the majority of high-quality data for downstream analysis.
+
+### Taxonomic Classification Results
+
+<div align="center">
+
+<b>Table 1.</b> Summary of Kraken2 classification results across vegan and omnivore samples, showing the number of samples and the range and average proportion of reads classified in each group.
+
+| Group     | Samples (n) | Mean Classified (%) | Range (%)        |
+|-----------|------------|---------------------|------------------|
+| Vegan     | 10         | ~63.5               | 59.07 – 77.05    |
+| Omnivore  | 10         | ~48.0               | 33.03 – 64.03    |
+
+</div>
+
+<br>
+
+The full `Kraken2` output logs can be found in [`kraken2_full_10632220.err`](kraken2_full_10632220.err) and [`kraken2_full_10632220.out`](kraken2_full_10632220.out). Overall, vegan samples showed consistently higher classification rates compared to omnivore samples. This suggests that a larger proportion of reads in the vegan group matched reference sequences in the database, while the higher proportion of unclassified reads in omnivore samples may reflect greater microbial diversity or the presence of taxa not well represented in the reference database.
+
+
 ## References
 [1] F. De Filippis et al., “Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,” Cell Host & Microbe, vol. 25, no. 3, pp. 444-453.e3, Mar. 2019, doi: https://doi.org/10.1016/j.chom.2019.01.004. <br/>
 [2] s-andrews, “s-andrews/FastQC,” GitHub, Nov. 20, 2018. https://github.com/s-andrews/FastQC <br/>
@@ -76,7 +106,7 @@ Differential abundance analysis was conducted using `ANCOM-BC2` [17] at both fam
 [10] J. G. Kers and E. Saccenti, “The Power of Microbiome Studies: Some Considerations on Which Alpha and Beta Metrics to Use and How to Report Results,” Frontiers in Microbiology, vol. 12, p. 796025, Mar. 2022, doi: https://doi.org/10.3389/fmicb.2021.796025.  <br/>
 [11] H. Zhou, K. He, J. Chen, and X. Zhang, “LinDA: linear models for differential abundance analysis of microbiome compositional data,” Genome Biology, vol. 23, no. 1, Apr. 2022, doi: https://doi.org/10.1186/s13059-022-02655-5. <br/>
 [12] J. Wirbel, M. Essex, S. K. Forslund, and G. Zeller, “A realistic benchmark for differential abundance testing and confounder adjustment in human microbiome studies,” Genome Biology, vol. 25, no. 1, Sep. 2024, doi: https://doi.org/10.1186/s13059-024-03390-9. <br/>
-[13] S. Chen, Y. Zhou, Y. Chen, and J. Gu, “fastp: an ultra-fast all-in-one FASTQ preprocessor,” Bioinformatics, vol. 34, no. 17, pp. i884–i890, Sep. 2018, doi: https://doi.org/10.1093/bioinformatics/bty560.
+[13] S. Chen, Y. Zhou, Y. Chen, and J. Gu, “fastp: an ultra-fast all-in-one FASTQ preprocessor,” Bioinformatics, vol. 34, no. 17, pp. i884–i890, Sep. 2018, doi: https://doi.org/10.1093/bioinformatics/bty560. <br/>
 [14] B. Langmead, “Index zone by BenLangmead,” benlangmead.github.io, Feb. 26, 2026. https://benlangmead.github.io/aws-indexes/k2 <br/>
 [15] R. J. Wright, A. Comeau, and Morgan, “From defaults to databases: parameter and database choice dramatically impact the performance of metagenomic taxonomic classification tools,” Microbial genomics, vol. 9, no. 3, Mar. 2023, doi: https://doi.org/10.1099/mgen.0.000949.  <br/>
 [16] S. Dabdoub, “kraken-biom,” GitHub, Sep. 15, 2023. https://github.com/smdabdoub/kraken-biom  <br/>
