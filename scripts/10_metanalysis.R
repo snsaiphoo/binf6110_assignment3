@@ -11,15 +11,6 @@ library(dplyr)
 biom <- read_biom("../table_full_0.15.biom")
 otu <- as.matrix(biom_data(biom))
 
-# Filter low abundance taxa to reduce noise
-otu <- otu[rowSums(otu) > 10, ]
-
-
-# Load the data 
-# 10 vegans and 10 omnivores
-biom <- read_biom("../table_full_0.15.biom")
-otu <- as.matrix(biom_data(biom))
-
 # Filter low abundance taxa
 otu <- otu[rowSums(otu) > 10, ]
 
@@ -87,34 +78,79 @@ colnames(tax_table(physeq)) <- c(
   "Kingdom","Phylum","Class","Order","Family","Genus","Species"
 )
 
-# Relative abundance plot at phylum level
+# Relative abundance plot at family level
 
 # Convert counts to relative abundance (proportions)
 physeq_rel <- transform_sample_counts(physeq, function(x) x / sum(x))
 
-# Aggregate taxa at phylum level
-physeq_phy <- tax_glom(physeq_rel, taxrank = "Phylum")
+# Aggregate taxa at family level
+physeq_fam <- tax_glom(physeq_rel, taxrank = "Family")
 
 # Convert to dataframe for plotting
-df <- psmelt(physeq_phy)
+df <- psmelt(physeq_fam)
 
-# Keep top 10 most abundant phyla, group rest as "Other"
-top_phyla <- names(sort(tapply(df$Abundance, df$Phylum, sum), decreasing = TRUE))[1:10]
-df$Phylum <- ifelse(df$Phylum %in% top_phyla, df$Phylum, "Other")
+# Keep top 10 most abundant family, group rest as "Other"
+top_fam <- names(sort(tapply(df$Abundance, df$Family, sum), decreasing = TRUE))[1:10]
+df$Family <- ifelse(df$Family %in% top_fam, df$Family, "Other")
 
 # Clean sample names for readability
 df$Sample <- sub("^(SRR[0-9]+).*", "\\1", df$Sample)
 
-p <- ggplot(df, aes(x = Sample, y = Abundance, fill = Phylum)) +
+p <- ggplot(df, aes(x = Sample, y = Abundance, fill = Family)) +
   geom_bar(stat = "identity") +
   facet_wrap(~Diet, scales = "free_x") +
-  labs(title = "Taxonomic Composition by Diet Group",
+  labs(title = "Family Level Composition by Diet Group",
        x = "Sample", y = "Relative Abundance") +
   scale_fill_brewer(palette = "Set2") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 p
+
+ggsave(
+  "../figures/taxonomic_abundance_family.png",
+  plot = p,
+  width = 10,
+  height = 6,
+  dpi = 300
+)
+
+# Relative abundance plot at genus level
+
+# Convert counts to relative abundance (proportions)
+physeq_rel <- transform_sample_counts(physeq, function(x) x / sum(x))
+
+# Aggregate taxa at family level
+physeq_gen <- tax_glom(physeq_rel, taxrank = "Genus")
+
+# Convert to dataframe for plotting
+df <- psmelt(physeq_gen)
+
+# Keep top 10 most abundant family, group rest as "Other"
+top_gen <- names(sort(tapply(df$Abundance, df$Genus, sum), decreasing = TRUE))[1:10]
+df$Genus <- ifelse(df$Genus %in% top_gen, df$Genus, "Other")
+
+# Clean sample names for readability
+df$Sample <- sub("^(SRR[0-9]+).*", "\\1", df$Sample)
+
+p <- ggplot(df, aes(x = Sample, y = Abundance, fill = Genus)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~Diet, scales = "free_x") +
+  labs(title = "Genus Level Composition by Diet Group",
+       x = "Sample", y = "Relative Abundance") +
+  scale_fill_brewer(palette = "Set2") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p
+
+ggsave(
+  "../figures/taxonomic_abundance_genus.png",
+  plot = p,
+  width = 10,
+  height = 6,
+  dpi = 300
+)
 
 # Relative abundance at species level (more detailed view)
 physeq_rel <- transform_sample_counts(physeq, function(x) x / sum(x))
