@@ -96,8 +96,34 @@ p <- ggplot(df, aes(x = Sample, y = Abundance, fill = Phylum)) +
 
 p
 
+# relative abundance with species
+physeq_rel <- transform_sample_counts(physeq, function(x) x / sum(x))
+
+# aggregate at species level
+physeq_species <- tax_glom(physeq_rel, taxrank = "Species")
+
+df <- psmelt(physeq_species)
+
+# identify top species
+top_species <- names(sort(tapply(df$Abundance, df$Species, sum), decreasing = TRUE))[1:10]
+
+df$Species <- ifelse(df$Species %in% top_species, df$Species, "Other")
+
+df$Sample <- sub("^(SRR[0-9]+).*", "\\1", df$Sample)
+
+p <- ggplot(df, aes(x = Sample, y = Abundance, fill = Species)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~Diet, scales = "free_x") +
+  labs(title = "Species-Level Composition by Diet Group",
+       x = "Sample", y = "Relative Abundance") +
+  scale_fill_brewer(palette = "Set3") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p
+
 # ggsave(
-#   "../figures/taxonomic_abundance.png",
+#   "../figures/taxonomic_abundance_species.png",
 #   plot = p,
 #   width = 10,
 #   height = 6,
@@ -120,13 +146,13 @@ alpha_plot <- plot_richness(
 alpha_plot
 
 
-ggsave(
-  filename = "../figures/alpha_diversity.png",
-  plot = alpha_plot,
-  width = 8,
-  height = 5,
-  dpi = 300
-)
+# ggsave(
+#   filename = "../figures/alpha_diversity.png",
+#   plot = alpha_plot,
+#   width = 8,
+#   height = 5,
+#   dpi = 300
+# )
 
 # Perform Wilcoxon rank-sum tests to further assess differences in alpha diversity between diet groups
 
@@ -165,13 +191,13 @@ beta_plot <- ggplot(beta_df, aes(x = Axis.1, y = Axis.2, color = Diet)) +
 
 beta_plot
 
-ggsave(
-  "../figures/beta_diversity_pcoa.png",
-  plot = beta_plot,
-  width = 7,
-  height = 5,
-  dpi = 300
-)
+# ggsave(
+#   "../figures/beta_diversity_pcoa.png",
+#   plot = beta_plot,
+#   width = 7,
+#   height = 5,
+#   dpi = 300
+# )
 
 # Clean taxonomy
 
@@ -185,9 +211,11 @@ tax_table(physeq) <- tax_table(as.matrix(tax))
 physeq_family <- tax_glom(physeq, "Family")
 
 physeq_family <- prune_taxa(
-  taxa_sums(physeq_family) > 20,
+  taxa_sums(physeq_family) > 50,
   physeq_family
 )
+
+physeq_family <- subset_taxa(physeq_family, Kingdom == "Bacteria")
 
 ancombc.family <- ancombc2(
   data = physeq_family,
@@ -206,25 +234,34 @@ res_family <- ancombc.family$res
 
 sig_family <- subset(res_family, q_DietVegan < 0.05)
 
-head(res_family)
-sig_family
+library(dplyr)
+library(ggplot2)
 
-# Effect sizes using lfc_DietVegan
-top_effects_family <- res_family %>%
-  arrange(desc(abs(lfc_DietVegan))) %>%
-  head(20)
+# Take top 15 strongest effects
+sig_family_plot <- sig_family %>%
+  arrange(desc(lfc_DietVegan)) %>%
+  head(15)
 
 # Plot
-ggplot(top_effects_family,
-       aes(x = lfc_DietVegan,
-           y = reorder(taxon, lfc_DietVegan))) +
-  geom_point(aes(color = p_DietVegan < 0.05), size = 3) +
+f <- ggplot(sig_family_plot,
+            aes(x = lfc_DietVegan,
+                y = reorder(taxon, lfc_DietVegan))) +
+  geom_point(color = "steelblue", size = 3) +
   geom_vline(xintercept = 0, color = "red") +
-  labs(title = "Top Differentially Abundant Families",
-       x = "Log Fold Change",
+  labs(title = "Differentially Abundant Families (ANCOM-BC2, BH)",
+       x = "Log Fold Change (Vegan vs Omnivore)",
        y = "Family") +
   theme_minimal()
 
+f
+
+ggsave(
+  "../figures/sda_families.png",
+  plot = f,
+  width = 7,
+  height = 5,
+  dpi = 300
+)
 # Differential Abundance at the Genus Level
 
 physeq_genus <- tax_glom(physeq, "Genus")
@@ -233,6 +270,8 @@ physeq_genus <- prune_taxa(
   taxa_sums(physeq_genus) > 20,
   physeq_genus
 )
+
+physeq_genus <- subset_taxa(physeq_genus, Kingdom == "Bacteria")
 
 ancombc.genus <- ancombc2(
   data = physeq_genus,
@@ -249,24 +288,37 @@ ancombc.genus <- ancombc2(
 
 res_genus <- ancombc.genus$res
 
+
 sig_genus <- subset(res_genus, q_DietVegan < 0.05)
+nrow(sig_genus)
 
 head(res_genus)
-sig_genus
+top_genus <- res_genus %>%
+  mutate(abs_lfc = abs(lfc_DietVegan)) %>%
+  arrange(desc(abs_lfc)) %>%
+  head(20)
 
-# Differential abundance with Maaslin2
+g <- ggplot(top_genus, aes(x = reorder(taxon, lfc_DietVegan), y = lfc_DietVegan)) +
+  geom_point(aes(color = lfc_DietVegan > 0), size = 3) +
+  geom_hline(yintercept = 0, color = "black") +
+  coord_flip() +
+  scale_color_manual(values = c("red", "blue"),
+                     labels = c("Omnivore-enriched", "Vegan-enriched"),
+                     name = "Direction") +
+  labs(
+    title = "Top Genera by Effect Size (ANCOM-BC2)",
+    subtitle = "No statistically significant Genera",
+    x = "Genus",
+    y = "Log Fold Change"
+  ) +
+  theme_minimal()
 
-# install.packages("Maaslin2") # run once if needed
-library(Maaslin2)
+g
 
-physeq_maaslin <- transform_sample_counts(physeq, function(x) x / sum(x))
-
-otu_maaslin <- as.data.frame(otu_table(physeq_maaslin))
-meta_maaslin <- as.data.frame(sample_data(physeq_maaslin))
-
-Maaslin2(
-  input_data = t(otu_maaslin),
-  input_metadata = meta_maaslin,
-  output = "maaslin2_output",
-  fixed_effects = c("Diet")
+ggsave(
+  "../figures/top_genera_effect_size.png",
+  plot = g,
+  width = 7,
+  height = 5,
+  dpi = 300
 )
